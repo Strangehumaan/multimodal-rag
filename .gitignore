@@ -1,0 +1,15 @@
+.env
+.idea/
+__pycache__/
+*.pyc
+chroma_store/
+data/
+*.wav
+*.mp3
+*.mp4
+*.pdf
+*.docx
+*.jpg
+*.jpeg
+*.png
+.venv/
