@@ -1,0 +1,11 @@
+services:
+  multimodal-rag:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./chroma_store:/app/chroma_store
+    restart: unless-stopped

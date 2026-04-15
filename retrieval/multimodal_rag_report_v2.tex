@@ -1,0 +1,1322 @@
+\documentclass[12pt,a4paper]{report}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{enumitem}
+\usepackage{mdframed}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+
+% ── Colors ────────────────────────────────────────────────────────────────────
+\definecolor{primaryblue}{RGB}{30, 58, 138}
+\definecolor{accentorange}{RGB}{234, 88, 12}
+\definecolor{codebg}{RGB}{245, 245, 245}
+\definecolor{codegreen}{RGB}{0, 128, 0}
+\definecolor{codegray}{RGB}{128, 128, 128}
+\definecolor{codeblue}{RGB}{0, 0, 200}
+\definecolor{agilegreen}{RGB}{22, 101, 52}
+\definecolor{agilebg}{RGB}{240, 253, 244}
+\definecolor{toolbg}{RGB}{239, 246, 255}
+\definecolor{toolborder}{RGB}{147, 197, 253}
+
+% ── Code Listing Style ────────────────────────────────────────────────────────
+\lstdefinestyle{codestyle}{
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue}\bfseries,
+    stringstyle=\color{accentorange},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    numberstyle=\tiny\color{codegray},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{gray}
+}
+\lstset{style=codestyle}
+
+% ── Agile Box Style ───────────────────────────────────────────────────────────
+\mdfdefinestyle{agilebox}{
+    linecolor=agilegreen,
+    linewidth=1.5pt,
+    backgroundcolor=agilebg,
+    leftmargin=0,
+    rightmargin=0,
+    innerleftmargin=12pt,
+    innerrightmargin=12pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+}
+
+% ── Tool Box Style ────────────────────────────────────────────────────────────
+\mdfdefinestyle{toolbox}{
+    linecolor=toolborder,
+    linewidth=1.5pt,
+    backgroundcolor=toolbg,
+    leftmargin=0,
+    rightmargin=0,
+    innerleftmargin=12pt,
+    innerrightmargin=12pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+}
+
+% ── Header and Footer ─────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primaryblue}{Multimodal RAG System}}
+\fancyhead[R]{\small\textcolor{primaryblue}{DevOps Project Report}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Section Formatting ────────────────────────────────────────────────────────
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{primaryblue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primaryblue}}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{accentorange}}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{agilegreen}}
+  {\thesubsubsection}{1em}{}
+
+% ── Hyperlink Setup ───────────────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    urlcolor=accentorange,
+    citecolor=primaryblue
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+% ══════════════════════════════════════════════════════════════════════════════
+
+% ── Title Page ────────────────────────────────────────────────────────────────
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+
+    % ── PLACEHOLDER: Institute Logo ──
+    \begin{figure}[H]
+        \centering
+        \fbox{\parbox{5cm}{\centering\vspace{1.2cm}
+        \textit{[Institute Logo]}\\
+        \vspace{1.2cm}}}
+    \end{figure}
+
+    \vspace{0.5cm}
+    {\large\bfseries Shri Vile Parle Kelavani Mandal's}\\[0.2cm]
+    {\large Department of Computer Engineering}\\[0.8cm]
+
+    \begin{mdframed}[linecolor=primaryblue, linewidth=2pt]
+    \centering\vspace{0.4cm}
+    {\Huge\bfseries\color{primaryblue} Multimodal RAG System}\\[0.4cm]
+    {\Large\color{accentorange} A DevOps-Driven AI Application}\\[0.3cm]
+    \vspace{0.2cm}
+    \end{mdframed}
+
+    \vspace{0.8cm}
+    {\large Submitted in partial fulfillment of the requirements for the course of}\\[0.3cm]
+    {\large\bfseries DevOps Engineering --- Semester VI (2025--2026)}
+
+    \vspace{1cm}
+
+    {\large\bfseries Team Members}\\[0.5cm]
+    \begin{tabular}{clll}
+        \toprule
+        \textbf{Sr.} & \textbf{Name} & \textbf{Modules} & \textbf{GitHub Branches} \\
+        \midrule
+        1 & Your Name & Audio, Image, Frontend, Docker & feature/audio-processing \\
+          &           &                                & feature/image-processing \\
+          &           &                                & feature/frontend, feature/docker \\
+        \midrule
+        2 & Reshma & Document Ingestion, Embeddings & feature/document-ingestion \\
+          &        &                                & feature/embedding \\
+        \midrule
+        3 & Navya & Vector Storage, Retrieval, & feature/vector-storage \\
+          &       & Generation, Testing         & feature/testing \\
+        \bottomrule
+    \end{tabular}
+
+    \vspace{1cm}
+
+    {\large\bfseries Under the Guidance of:}\\[0.3cm]
+    {\large [Faculty Name]}\\[0.2cm]
+    {\large Academic Year 2025--2026}
+
+\end{titlepage}
+
+% ── Abstract ──────────────────────────────────────────────────────────────────
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\onehalfspacing
+
+This report presents the complete design, development, and deployment of a \textbf{Multimodal Retrieval-Augmented Generation (RAG) System} developed by a three-member team following the \textbf{Agile software development methodology}. The project demonstrates a full DevOps lifecycle integrating GitHub, Jenkins, Docker, Kubernetes, and Jira.
+
+The system ingests heterogeneous data sources --- PDF documents, DOCX files, images, and audio recordings --- and enables semantic natural language search across all modalities simultaneously. The core AI stack uses \textbf{Anthropic Claude} for answer generation and image understanding, \textbf{OpenAI Whisper} for audio transcription, \textbf{Voyage AI} for semantic embeddings, and \textbf{ChromaDB} as the vector database.
+
+The Agile process was executed across two sprints managed in \textbf{Jira}, with each sprint delivering a working increment. Source code was managed in \textbf{GitHub} using a feature-branch strategy with eight branches across three contributors. \textbf{Jenkins} provided automated CI/CD pipelines triggered on every push. \textbf{Docker} containerized the application for consistent deployment, and \textbf{Kubernetes} handled orchestration in production. The frontend is a responsive \textbf{Streamlit} web application with live ingestion progress tracking and source-cited answers.
+
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Introduction}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Background and Motivation}
+
+Organizations today accumulate knowledge across diverse formats --- scanned PDF reports, Word documents, audio recordings of meetings, and photographs of whiteboards. Traditional keyword-based search is blind to semantic meaning and completely incapable of searching across modalities. A researcher cannot ask ``What did the CEO say about layoffs?'' and get answers that span a PDF annual report, a recorded board meeting, and a chart from a presentation --- all at once.
+
+Retrieval-Augmented Generation (RAG) solves this by combining semantic vector search with large language model generation. Instead of the LLM relying on its training data, it is given the most relevant document chunks at query time and instructed to answer only from those chunks. This produces grounded, citable answers.
+
+\section{Problem Statement}
+
+The gap this project addresses is the absence of a unified, open, and deployable multimodal RAG system that:
+\begin{itemize}[leftmargin=2cm]
+    \item Handles text, image, and audio in a single pipeline
+    \item Produces answers with explicit source citations
+    \item Is containerized and deployable with one command
+    \item Is built and managed using industry-standard DevOps practices
+\end{itemize}
+
+\section{Objectives}
+
+\begin{enumerate}[leftmargin=2cm]
+    \item Design a modular six-layer multimodal ingestion pipeline
+    \item Integrate Claude Vision, Whisper, and Voyage AI into a unified chunk schema
+    \item Implement modality-aware semantic retrieval with boosting
+    \item Build a Streamlit frontend with live ingestion progress
+    \item Containerize using Docker and orchestrate with Kubernetes
+    \item Manage the full SDLC using Agile with Jira, GitHub, and Jenkins
+\end{enumerate}
+
+\section{Scope and Supported Modalities}
+
+\begin{table}[H]
+\centering
+\caption{Supported File Types and Processing Methods}
+\begin{tabular}{p{2.5cm}p{3.5cm}p{3.5cm}p{3.5cm}}
+\toprule
+\textbf{Modality} & \textbf{File Types} & \textbf{Processing} & \textbf{API} \\
+\midrule
+Documents & .pdf, .docx & Text extraction + dynamic chunking & None (local) \\
+Images & .jpg, .png, .webp, .gif & Visual description generation & Claude Vision \\
+Audio & .mp3, .wav, .m4a, .ogg & Speech-to-text with timestamps & OpenAI Whisper \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Team and Responsibilities}
+
+\begin{table}[H]
+\centering
+\caption{Team Member Responsibilities and Branch Ownership}
+\begin{tabular}{p{2.5cm}p{4cm}p{6cm}}
+\toprule
+\textbf{Member} & \textbf{Branches} & \textbf{Files Owned} \\
+\midrule
+Your Name & feature/audio-processing, feature/image-processing, feature/frontend, feature/docker &
+audio\_transcriber.py, image\_processor.py, app.py, Dockerfile, docker-compose.yml \\
+\midrule
+Reshma & feature/document-ingestion, feature/embedding &
+document\_parser.py, embedder.py \\
+\midrule
+Navya & feature/vector-storage, feature/testing &
+store.py, retriever.py, generator.py, main.py, config.py, requirements.txt, test\_speed.py, verify\_audio.py \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Agile Development Methodology}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Why Agile?}
+
+This project adopted the \textbf{Agile methodology} because the system involved multiple interdependent AI components whose exact behavior could not be fully specified upfront. Agile allowed the team to build incrementally, test early, and adapt based on real feedback --- for example, discovering the modality imbalance problem (audio never being cited) only after integration testing, and fixing it in Sprint 2.
+
+\begin{mdframed}[style=agilebox]
+\textbf{Core Agile Principles Applied in This Project:}
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Working software over documentation} --- Each sprint delivered a runnable increment of the system
+    \item \textbf{Responding to change} --- Modality boosting, retry logic, and dynamic chunking were all mid-project adaptations
+    \item \textbf{Individuals and interactions} --- Daily informal standups via WhatsApp and weekly sync sessions
+    \item \textbf{Customer collaboration} --- Regular demos to the faculty advisor after each sprint
+\end{itemize}
+\end{mdframed}
+
+\section{Sprint Structure}
+
+The project was divided into \textbf{two two-week sprints}. Each sprint had a defined goal, a set of Jira stories, and a working demo at the end.
+
+\begin{table}[H]
+\centering
+\caption{Sprint Overview}
+\begin{tabularx}{\textwidth}{p{1.5cm}p{3cm}X}
+\toprule
+\textbf{Sprint} & \textbf{Goal} & \textbf{Deliverables} \\
+\midrule
+Sprint 1 & Build the backend pipeline &
+Document parser, embedder, ChromaDB store, retriever, Claude generator, config, basic main.py \\
+\midrule
+Sprint 2 & Add multimodal support, frontend, and DevOps &
+Image processor, audio transcriber, modality boosting, Streamlit UI, Dockerfile, Jenkins pipeline, Kubernetes manifests \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Sprint 1 --- Backend Pipeline}
+
+\subsection{Sprint Goal}
+Deliver a working end-to-end text RAG pipeline --- ingest a PDF, embed it, store in ChromaDB, and query with Claude.
+
+\subsection{Sprint 1 User Stories}
+
+\begin{table}[H]
+\centering
+\caption{Sprint 1 User Stories}
+\begin{tabularx}{\textwidth}{p{1.5cm}Xp{2cm}p{2cm}}
+\toprule
+\textbf{Story ID} & \textbf{Story} & \textbf{Assignee} & \textbf{Points} \\
+\midrule
+RAG-01 & As a user I can upload a PDF and have it parsed into searchable chunks & Reshma & 5 \\
+RAG-02 & As a user I can upload a DOCX file and have it parsed into chunks & Reshma & 3 \\
+RAG-03 & As a developer chunks are embedded using Voyage AI & Reshma & 5 \\
+RAG-04 & As a developer embedded chunks are stored persistently in ChromaDB & Navya & 5 \\
+RAG-05 & As a user I can type a question and get a Claude-generated answer & Navya & 8 \\
+RAG-06 & As a user every answer cites the source file and modality & Navya & 5 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sprint 1 Review}
+All six stories were completed and a working demo was delivered. Key finding: a 430-page PDF produced 1896 chunks causing 50+ second ingestion. Backlog item created for dynamic chunking in Sprint 2.
+
+\section{Sprint 2 --- Multimodal + DevOps}
+
+\subsection{Sprint Goal}
+Extend the system with image and audio modalities, build the Streamlit UI, and complete the full DevOps setup.
+
+\subsection{Sprint 2 User Stories}
+
+\begin{table}[H]
+\centering
+\caption{Sprint 2 User Stories}
+\begin{tabularx}{\textwidth}{p{1.5cm}Xp{2cm}p{2cm}}
+\toprule
+\textbf{Story ID} & \textbf{Story} & \textbf{Assignee} & \textbf{Points} \\
+\midrule
+RAG-07 & As a user I can upload images and search by their visual content & Your Name & 5 \\
+RAG-08 & As a user I can upload audio files and search by spoken content & Your Name & 8 \\
+RAG-09 & As a developer large PDFs use adaptive chunk sizing & Reshma & 5 \\
+RAG-10 & As a user audio and image sources appear in query results & Navya & 8 \\
+RAG-11 & As a user I see a live progress bar during file ingestion & Your Name & 5 \\
+RAG-12 & As an admin the app runs with one Docker command & Your Name & 5 \\
+RAG-13 & As a developer the CI pipeline runs on every push & Your Name & 8 \\
+RAG-14 & As a developer the app deploys to Kubernetes & Navya & 8 \\
+RAG-15 & As a developer ingestion speed and audio storage are testable & Navya & 3 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Sprint 2 Review}
+All stories completed. Mid-sprint adaptation: RAG-10 required the modality boosting algorithm which was not planned but was added after observing audio chunks never appearing in results.
+
+\section{Agile Ceremonies}
+
+\begin{table}[H]
+\centering
+\caption{Agile Ceremonies Conducted}
+\begin{tabular}{p{3.5cm}p{3cm}p{7cm}}
+\toprule
+\textbf{Ceremony} & \textbf{Frequency} & \textbf{How Conducted} \\
+\midrule
+Sprint Planning & Start of each sprint & Team meeting to assign stories and estimate points \\
+Daily Standup & 3x per week & WhatsApp group status updates \\
+Sprint Review & End of each sprint & Live demo to faculty advisor \\
+Sprint Retrospective & End of each sprint & 30-minute team discussion on what worked / what to improve \\
+Backlog Grooming & Mid-sprint & Jira refinement session to reprioritize backlog items \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Jira Project Management}
+
+Jira was used as the primary Agile project management tool. All user stories, sprint boards, and progress tracking were managed here.
+
+\begin{mdframed}[style=toolbox]
+\textbf{How Jira Was Used:}
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Product Backlog} --- All 15 user stories listed with story points
+    \item \textbf{Sprint Boards} --- Kanban-style To Do / In Progress / In Review / Done columns
+    \item \textbf{Issue Linking} --- Each Jira story linked to its corresponding GitHub Pull Request
+    \item \textbf{Burndown Chart} --- Tracked story point completion per sprint
+    \item \textbf{Epics} --- Stories grouped into: Backend Pipeline, Multimodal Processing, DevOps Infrastructure
+\end{itemize}
+\end{mdframed}
+
+% ── PLACEHOLDER: Jira Sprint Board ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{4.5cm}
+    \textbf{[Screenshot: Jira Sprint Board]}\\[0.3cm]
+    \small Take a screenshot of your Jira board showing the sprint with stories in\\
+    To Do / In Progress / Done columns. Save as \texttt{jira\_sprint\_board.png}\\
+    and replace this box with: \texttt{\textbackslash includegraphics[width=\textbackslash textwidth]\{images/jira\_sprint\_board.png\}}
+    \vspace{4cm}}}
+    \caption{Jira Sprint Board --- Sprint 2 in Progress}
+    \label{fig:jira_board}
+\end{figure}
+
+% ── PLACEHOLDER: Jira Backlog ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{3.5cm}
+    \textbf{[Screenshot: Jira Product Backlog]}\\[0.3cm]
+    \small Screenshot of Jira backlog showing all user stories, story points,\\
+    and epic labels. Save as \texttt{jira\_backlog.png}
+    \vspace{3cm}}}
+    \caption{Jira Product Backlog Showing All 15 User Stories}
+    \label{fig:jira_backlog}
+\end{figure}
+
+% ── PLACEHOLDER: Jira Burndown ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{12cm}{\centering\vspace{3cm}
+    \textbf{[Screenshot: Jira Burndown Chart]}\\[0.3cm]
+    \small Sprint burndown chart from Jira showing story point completion over time.\\
+    Save as \texttt{jira\_burndown.png}
+    \vspace{2.5cm}}}
+    \caption{Sprint Burndown Chart from Jira}
+    \label{fig:jira_burndown}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{System Architecture}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{High-Level Architecture}
+
+The system is composed of six pipeline layers that process all modalities through a unified schema before storing and retrieving them via semantic vector search.
+
+% ── PLACEHOLDER: Architecture Diagram ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{4cm}
+    \textbf{[Diagram: System Architecture]}\\[0.3cm]
+    \small Draw or export a diagram showing:\\
+    Files (PDF/Image/Audio) $\rightarrow$ Ingestion $\rightarrow$ Processing $\rightarrow$ Embedding $\rightarrow$ ChromaDB\\
+    Query $\rightarrow$ Embed Query $\rightarrow$ ChromaDB Search $\rightarrow$ Modality Boost $\rightarrow$ Claude $\rightarrow$ Answer\\
+    Save as \texttt{architecture.png}
+    \vspace{3.5cm}}}
+    \caption{High-Level System Architecture --- Six Layer Pipeline}
+    \label{fig:architecture}
+\end{figure}
+
+\section{Pipeline Layers}
+
+\begin{table}[H]
+\centering
+\caption{Pipeline Layer Summary}
+\begin{tabularx}{\textwidth}{p{1cm}p{3.5cm}Xp{3cm}}
+\toprule
+\textbf{\#} & \textbf{Layer} & \textbf{Responsibility} & \textbf{Key File} \\
+\midrule
+1 & Ingestion & Parse PDFs, DOCX files; split into chunks & document\_parser.py \\
+2 & Processing & Describe images; transcribe audio & image\_processor.py, audio\_transcriber.py \\
+3 & Embedding & Convert all chunks to vectors & embedder.py \\
+4 & Vector DB & Store and persist vectors & store.py \\
+5 & Retrieval & Search with modality boosting & retriever.py \\
+6 & Generation & Claude generates cited answers & generator.py \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Unified Chunk Schema}
+
+The most important architectural decision is that every modality produces an identical chunk structure. This means layers 3--6 are completely modality-agnostic.
+
+\begin{lstlisting}[language=Python, caption=Unified Chunk Schema Shared Across All Modalities]
+{
+    "text":        "Extracted or AI-generated text content",
+    "source_file": "original_filename.ext",
+    "modality":    "text" | "image" | "audio",
+    "chunk_index": 0,
+    "embedding":   [0.023, -0.041, 0.118, ...]  # Added by embedder
+}
+\end{lstlisting}
+
+\section{Technology Stack}
+
+\begin{table}[H]
+\centering
+\caption{Complete Technology Stack}
+\begin{tabular}{p{3cm}p{3.5cm}p{6.5cm}}
+\toprule
+\textbf{Category} & \textbf{Technology} & \textbf{Purpose} \\
+\midrule
+LLM & Anthropic Claude & Answer generation with citations \\
+Vision & Claude Vision API & Image description and OCR \\
+Speech & OpenAI Whisper & Audio transcription with timestamps \\
+Embeddings & Voyage AI voyage-3.5 & Semantic vector generation \\
+Vector DB & ChromaDB & Persistent similarity search \\
+Frontend & Streamlit & Web UI for ingestion and search \\
+Version Control & GitHub & Feature-branch collaboration \\
+CI/CD & Jenkins & Automated build and deploy \\
+Containers & Docker + Compose & Application packaging \\
+Orchestration & Kubernetes & Production deployment \\
+Project Mgmt & Jira & Agile sprint management \\
+Language & Python 3.11 & Primary development language \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Implementation}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Project Folder Structure}
+
+\begin{lstlisting}[caption=Complete Project Structure]
+multimodal_rag/
+|-- data/
+|   |-- documents/         <- PDF and DOCX input files
+|   |-- images/            <- JPG, PNG, WEBP input files
+|   `-- audio/             <- MP3, WAV, M4A input files
+|-- ingestion/
+|   `-- document_parser.py <- PDF + DOCX parser (Reshma)
+|-- processing/
+|   |-- image_processor.py <- Claude Vision processor (Your Name)
+|   `-- audio_transcriber.py <- Whisper transcriber (Your Name)
+|-- embeddings/
+|   `-- embedder.py        <- Voyage AI embedder (Reshma)
+|-- vectordb/
+|   `-- store.py           <- ChromaDB storage (Navya)
+|-- retrieval/
+|   `-- retriever.py       <- Modality-boosted retriever (Navya)
+|-- generation/
+|   `-- generator.py       <- Claude answer generator (Navya)
+|-- app.py                 <- Streamlit UI (Your Name)
+|-- main.py                <- Pipeline entry point (Navya)
+|-- config.py              <- Centralized settings (Navya)
+|-- requirements.txt       <- Dependencies (Navya)
+|-- Dockerfile             <- Container image (Your Name)
+|-- docker-compose.yml     <- Compose config (Your Name)
+|-- .dockerignore          <- Docker exclusions (Your Name)
+|-- test_speed.py          <- Performance tests (Navya)
+`-- verify_audio.py        <- Audio storage tests (Navya)
+\end{lstlisting}
+
+\section{Document Ingestion (Reshma)}
+
+\subsection{Dynamic Chunk Sizing}
+
+A key innovation in this module is adaptive chunk sizing. A fixed 500-character chunk size would create 1896 chunks from a 430-page PDF, causing 50+ second ingestion. The solution calculates the required chunk size to keep total chunks under 400, regardless of document length.
+
+\begin{lstlisting}[language=Python, caption=Adaptive Chunk Sizing Algorithm]
+TARGET_CHUNKS = 400
+
+def _calculate_chunk_size(text: str) -> tuple[int, int]:
+    estimated = len(text) / CHUNK_SIZE
+    if estimated <= TARGET_CHUNKS:
+        return CHUNK_SIZE, CHUNK_OVERLAP         # Small doc: use defaults
+    dynamic_size    = int(len(text) / TARGET_CHUNKS)
+    dynamic_overlap = int(dynamic_size * 0.10)   # 10% overlap always
+    return dynamic_size, dynamic_overlap
+\end{lstlisting}
+
+\subsection{Chunking with Overlap}
+
+Adjacent chunks share \texttt{CHUNK\_OVERLAP} characters to prevent important sentences at boundaries from losing context.
+
+\section{Image Processing (Your Name)}
+
+Images are sent to Claude Vision as Base64-encoded strings. The prompt instructs Claude to describe charts, transcribe any text, and provide enough detail for the description to be searchable.
+
+\begin{lstlisting}[language=Python, caption=Claude Vision API Call]
+message = client.messages.create(
+    model=CLAUDE_MODEL,
+    max_tokens=1024,
+    messages=[{
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "source": {
+                    "type":       "base64",
+                    "media_type": media_type,
+                    "data":       base64_string,
+                },
+            },
+            {"type": "text", "text": DESCRIPTION_PROMPT}
+        ]
+    }]
+)
+\end{lstlisting}
+
+\section{Audio Transcription (Your Name)}
+
+Whisper returns per-segment timestamps via \texttt{verbose\_json}. Segments are grouped into 30-second blocks, each prefixed with a human-readable timestamp for direct citation.
+
+\begin{lstlisting}[language=Python, caption=Audio Chunk with Timestamp Prefix]
+# Example output chunk
+{
+    "text":        "[00:30 - 01:00] The CEO confirmed there
+                    would be no layoffs in Q4...",
+    "source_file": "board_meeting.mp3",
+    "modality":    "audio",
+    "chunk_index": 1
+}
+\end{lstlisting}
+
+\section{Embedding Module (Reshma)}
+
+Voyage AI requires distinct \texttt{input\_type} values for document storage vs.\ query time. Mixing these degrades retrieval quality significantly. The module enforces this separation through two distinct public functions.
+
+\begin{lstlisting}[language=Python, caption=Separate Document and Query Embedding]
+def embed_texts(texts):        # For storing content
+    return _embed_with_retry(texts, input_type="document")
+
+def embed_query(query):        # For search queries
+    return _embed_with_retry([query], input_type="query")[0]
+\end{lstlisting}
+
+Exponential backoff handles transient network failures:
+
+\begin{lstlisting}[language=Python, caption=Retry with Exponential Backoff]
+for attempt in range(1, MAX_RETRIES + 1):
+    try:
+        return client.embed(texts, model=MODEL, input_type=t).embeddings
+    except Exception as e:
+        last_error = e
+        if attempt < MAX_RETRIES:
+            time.sleep(RETRY_DELAY * attempt)  # 2s -> 4s -> 6s
+raise last_error
+\end{lstlisting}
+
+\section{Vector Storage (Navya)}
+
+ChromaDB persists vectors to a local \texttt{chroma\_store/} folder mounted as a Docker volume. The \texttt{upsert} strategy ensures re-ingesting a file updates rather than duplicates its vectors.
+
+\section{Retrieval with Modality Boosting (Navya)}
+
+Without boosting, a large PDF with 400 chunks would always dominate results over 4 audio chunks. The algorithm guarantees representation:
+
+\begin{enumerate}[leftmargin=2cm]
+    \item Fetch $k \times 6$ candidates from ChromaDB
+    \item Give the best audio chunk a guaranteed slot (if score $\geq 0.3$)
+    \item Give the best image chunk a guaranteed slot (if score $\geq 0.3$)
+    \item Fill remaining slots with highest-scoring chunks from any modality
+\end{enumerate}
+
+\section{Answer Generation (Navya)}
+
+Claude receives retrieved chunks formatted as numbered sources. The system prompt enforces strict grounding:
+
+\begin{lstlisting}[language=Python, caption=Grounded Generation System Prompt]
+SYSTEM_PROMPT = (
+    "You are a precise question-answering assistant. "
+    "Answer ONLY using the sources provided below. "
+    "Cite every claim as [filename | modality]. "
+    "If the answer is not in the sources, say: "
+    "'I could not find an answer in the provided documents.'"
+)
+\end{lstlisting}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Frontend Application (Streamlit)}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Application Layout}
+
+The Streamlit UI uses a sidebar-main layout. The sidebar contains the ingestion panel and the main panel contains the search interface.
+
+% ── PLACEHOLDER: Full App Screenshot ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{5cm}
+    \textbf{[Screenshot: Full Streamlit Application]}\\[0.3cm]
+    \small Take a screenshot of the running app at \texttt{http://localhost:8501}\\
+    showing both the sidebar (with uploaded files) and the main panel\\
+    (with an answer and source cards). Save as \texttt{images/app\_full.png}\\[0.3cm]
+    Replace with: \texttt{\textbackslash includegraphics[width=\textbackslash textwidth]\{images/app\_full.png\}}
+    \vspace{4cm}}}
+    \caption{Streamlit Application --- Full Interface View}
+    \label{fig:streamlit_full}
+\end{figure}
+
+\section{Section 1 --- Data Ingestion Panel}
+
+The ingestion panel provides a complete upload-to-vector workflow:
+
+\begin{itemize}[leftmargin=2cm]
+    \item Multi-file uploader accepting all 12 supported extensions
+    \item File pills displaying each uploaded filename
+    \item Per-file progress bar updating in real time as each file is processed
+    \item A live log showing the last 8 status lines (e.g., ``Describing image: chart.png (calling Claude Vision...)'')
+    \item Success confirmation with total chunk count on completion
+\end{itemize}
+
+% ── PLACEHOLDER: Ingestion in Progress Screenshot ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{10cm}{\centering\vspace{4cm}
+    \textbf{[Screenshot: Ingestion in Progress]}\\[0.3cm]
+    \small Screenshot of the sidebar while ingestion is running ---\\
+    showing the progress bar mid-way and a live log line like\\
+    ``Describing image: revenue\_chart.png (calling Claude Vision...)''\\
+    Save as \texttt{images/app\_ingestion.png}
+    \vspace{3.5cm}}}
+    \caption{Live Ingestion Progress in Sidebar}
+    \label{fig:ingestion_progress}
+\end{figure}
+
+\section{Section 2 --- Search and Answer Panel}
+
+The search panel provides:
+\begin{itemize}[leftmargin=2cm]
+    \item A text input for natural language questions (disabled Search button until text entered)
+    \item A spinner while retrieval and generation is in progress
+    \item An answer box displaying Claude's response with inline citations
+    \item Color-coded source cards below the answer showing filename, modality, and relevance score
+\end{itemize}
+
+% ── PLACEHOLDER: Search Results Screenshot ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{5cm}
+    \textbf{[Screenshot: Search Results with Citations]}\\[0.3cm]
+    \small Screenshot of the main panel after a query --- showing the answer box\\
+    with inline citations like \texttt{[coi.pdf | text]} and below it the source cards\\
+    with green/blue/purple badges for text/image/audio.\\
+    Save as \texttt{images/app\_search\_results.png}
+    \vspace{4cm}}}
+    \caption{Search Answer with Inline Citations and Color-Coded Source Cards}
+    \label{fig:search_results}
+\end{figure}
+
+% ── PLACEHOLDER: Source Cards Close-Up ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{12cm}{\centering\vspace{3cm}
+    \textbf{[Screenshot: Source Cards Close-Up]}\\[0.3cm]
+    \small Zoomed screenshot showing 2--3 source cards with their colored badges,\\
+    filenames, and relevance scores clearly visible.\\
+    Save as \texttt{images/app\_source\_cards.png}
+    \vspace{2.5cm}}}
+    \caption{Source Citation Cards --- Green (text), Blue (image), Purple (audio)}
+    \label{fig:source_cards}
+\end{figure}
+
+\section{Source Card Color System}
+
+\begin{table}[H]
+\centering
+\caption{Modality Color Coding in Source Cards}
+\begin{tabular}{llll}
+\toprule
+\textbf{Modality} & \textbf{Badge Color} & \textbf{Background} & \textbf{Meaning} \\
+\midrule
+text  & \textcolor{agilegreen}{\textbf{Green}}  & Dark green & Content from PDF or DOCX \\
+image & \textcolor{codeblue}{\textbf{Blue}}   & Dark blue  & Description from image file \\
+audio & \textcolor{accentorange}{\textbf{Purple}} & Dark purple & Transcription from audio \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{DevOps Implementation}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{GitHub --- Version Control}
+
+\begin{mdframed}[style=toolbox]
+\textbf{GitHub was used for:} Source code hosting, feature-branch collaboration, Pull Request-based code review, and commit history tracking across three team members.
+\end{mdframed}
+
+\subsection{Feature Branch Workflow}
+
+Every feature was developed on an isolated branch. No team member ever committed directly to \texttt{main}. All merges happened via Pull Requests, creating a clean, reviewable history.
+
+\begin{table}[H]
+\centering
+\caption{Git Branch Structure and Ownership}
+\begin{tabular}{p{5cm}p{2.5cm}p{5.5cm}}
+\toprule
+\textbf{Branch} & \textbf{Owner} & \textbf{Merged Commit Message} \\
+\midrule
+feature/document-ingestion & Reshma & feat: add PDF and DOCX parser with dynamic chunking \\
+feature/embedding & Reshma & feat: add Voyage AI embedder with retry logic \\
+feature/vector-storage & Navya & feat: add ChromaDB storage and modality boosting \\
+feature/testing & Navya & test: add speed diagnostic and audio verification \\
+feature/audio-processing & Your Name & feat: add Whisper audio transcription with timestamps \\
+feature/image-processing & Your Name & feat: add Claude Vision image description processor \\
+feature/frontend & Your Name & feat: add Streamlit UI with ingestion and search \\
+feature/docker & Your Name & chore: add Docker containerization setup \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Commit Convention}
+
+All commits follow the \textbf{Conventional Commits} specification for clean, machine-readable history:
+
+\begin{table}[H]
+\centering
+\caption{Conventional Commit Prefixes Used}
+\begin{tabular}{ll}
+\toprule
+\textbf{Prefix} & \textbf{Used For} \\
+\midrule
+feat: & New feature (e.g., audio transcriber, image processor) \\
+fix: & Bug fix (e.g., retry logic, modality boosting) \\
+chore: & Build/config changes (e.g., Dockerfile, .gitignore) \\
+test: & Test additions (e.g., test\_speed.py, verify\_audio.py) \\
+refactor: & Code restructure without behavior change \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ── PLACEHOLDER: GitHub Network Graph ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{5cm}
+    \textbf{[Screenshot: GitHub Network Graph]}\\[0.3cm]
+    \small Go to: \texttt{https://github.com/Strangehumaan/multimodal-rag/network}\\
+    Take a screenshot of the branch graph showing all 8 branches\\
+    diverging from and merging back into \texttt{main}.\\
+    Save as \texttt{images/github\_network.png}\\[0.3cm]
+    Replace with: \texttt{\textbackslash includegraphics[width=\textbackslash textwidth]\{images/github\_network.png\}}
+    \vspace{4cm}}}
+    \caption{GitHub Network Graph --- All 8 Feature Branches Merged into Main}
+    \label{fig:github_network}
+\end{figure}
+
+% ── PLACEHOLDER: GitHub Pull Requests ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{4cm}
+    \textbf{[Screenshot: GitHub Pull Requests Page]}\\[0.3cm]
+    \small Go to: \texttt{https://github.com/Strangehumaan/multimodal-rag/pulls?state=closed}\\
+    Take a screenshot showing all 8 merged PRs with their titles and merge status.\\
+    Save as \texttt{images/github\_prs.png}
+    \vspace{3.5cm}}}
+    \caption{GitHub --- All 8 Pull Requests Merged into Main}
+    \label{fig:github_prs}
+\end{figure}
+
+% ── PLACEHOLDER: GitHub Contributors ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{3cm}
+    \textbf{[Screenshot: GitHub Contributors Graph]}\\[0.3cm]
+    \small Go to: \texttt{https://github.com/Strangehumaan/multimodal-rag/graphs/contributors}\\
+    Screenshot showing all 3 contributors with their commit counts.\\
+    Save as \texttt{images/github\_contributors.png}
+    \vspace{2.5cm}}}
+    \caption{GitHub Contributors Graph Showing All 3 Team Members}
+    \label{fig:github_contributors}
+\end{figure}
+
+\section{Jenkins --- CI/CD Pipeline}
+
+\begin{mdframed}[style=toolbox]
+\textbf{Jenkins was used for:} Automated build triggering on every GitHub push, dependency installation validation, test execution, Docker image building, and deployment to the target environment.
+\end{mdframed}
+
+\subsection{Pipeline Overview}
+
+Jenkins is configured with a \textbf{GitHub webhook} so that every push to any branch automatically triggers the pipeline. Merges to \texttt{main} additionally trigger the Docker build and deploy stages.
+
+\begin{table}[H]
+\centering
+\caption{Jenkins Pipeline Stages}
+\begin{tabular}{p{2.5cm}p{5cm}p{5.5cm}}
+\toprule
+\textbf{Stage} & \textbf{Action} & \textbf{Trigger Condition} \\
+\midrule
+Checkout & Pull latest code from GitHub & Every push to any branch \\
+Install & \texttt{pip install -r requirements.txt} & Every push \\
+Lint & Check Python syntax validity & Every push \\
+Test & Run test\_speed.py and verify\_audio.py & Every push \\
+Build Image & \texttt{docker build -t multimodal-rag .} & Merge to main only \\
+Push Image & Push to Docker registry & Merge to main only \\
+Deploy & \texttt{docker-compose up -d --build} & Merge to main only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Jenkinsfile}
+
+\begin{lstlisting}[caption=Jenkinsfile Pipeline Definition]
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Strangehumaan/multimodal-rag.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'python verify_audio.py'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t multimodal-rag:latest .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose up -d --build'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs above.'
+        }
+    }
+}
+\end{lstlisting}
+
+% ── PLACEHOLDER: Jenkins Pipeline Screenshot ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{4.5cm}
+    \textbf{[Screenshot: Jenkins Pipeline Stage View]}\\[0.3cm]
+    \small Screenshot of Jenkins showing the pipeline with all stages:\\
+    Checkout $\rightarrow$ Install $\rightarrow$ Test $\rightarrow$ Build $\rightarrow$ Deploy\\
+    with green checkmarks on successful stages.\\
+    Save as \texttt{images/jenkins\_pipeline.png}
+    \vspace{4cm}}}
+    \caption{Jenkins CI/CD Pipeline --- All Stages Passing}
+    \label{fig:jenkins_pipeline}
+\end{figure}
+
+% ── PLACEHOLDER: Jenkins Build History ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{12cm}{\centering\vspace{3cm}
+    \textbf{[Screenshot: Jenkins Build History]}\\[0.3cm]
+    \small Screenshot of the Jenkins build history showing multiple successful builds\\
+    triggered by different branch pushes.\\
+    Save as \texttt{images/jenkins\_history.png}
+    \vspace{2.5cm}}}
+    \caption{Jenkins Build History Showing Automated Triggers}
+    \label{fig:jenkins_history}
+\end{figure}
+
+\section{Docker --- Containerization}
+
+\begin{mdframed}[style=toolbox]
+\textbf{Docker was used for:} Packaging the entire application --- Python runtime, all dependencies, and the Streamlit server --- into a single portable container image that runs identically on any machine.
+\end{mdframed}
+
+\subsection{Why Docker?}
+
+Without Docker, every team member and every deployment target needs the correct Python version, all 9 libraries installed at the right versions, and the correct environment variables configured. Docker eliminates this entirely --- the image is built once and runs anywhere.
+
+\subsection{Dockerfile}
+
+\begin{lstlisting}[caption=Dockerfile]
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8501
+
+ENV STREAMLIT_SERVER_HEADLESS=true
+ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+
+CMD ["streamlit", "run", "app.py",
+     "--server.port=8501", "--server.address=0.0.0.0"]
+\end{lstlisting}
+
+\subsection{Docker Compose}
+
+\begin{lstlisting}[caption=docker-compose.yml]
+services:
+  multimodal-rag:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./chroma_store:/app/chroma_store
+    restart: unless-stopped
+\end{lstlisting}
+
+\subsection{Volume Strategy}
+
+Two directories are mounted as named volumes:
+\begin{itemize}[leftmargin=2cm]
+    \item \texttt{./data} --- Input files live on the host; the container reads but does not own them
+    \item \texttt{./chroma\_store} --- ChromaDB persists across container restarts and rebuilds
+\end{itemize}
+
+% ── PLACEHOLDER: Docker Running Screenshot ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{3.5cm}
+    \textbf{[Screenshot: Docker Running]}\\[0.3cm]
+    \small Run \texttt{docker ps} in your terminal and take a screenshot showing\\
+    the \texttt{multimodal-rag} container running with port 8501 mapped.\\
+    Save as \texttt{images/docker\_running.png}
+    \vspace{3cm}}}
+    \caption{Docker Container Running --- \texttt{docker ps} Output}
+    \label{fig:docker_running}
+\end{figure}
+
+\section{Kubernetes --- Container Orchestration}
+
+\begin{mdframed}[style=toolbox]
+\textbf{Kubernetes was used for:} Deploying the containerized application with defined replica counts, managing rolling updates without downtime, exposing the service via a LoadBalancer, and persisting ChromaDB data via PersistentVolumeClaims.
+\end{mdframed}
+
+\subsection{Why Kubernetes?}
+
+Docker Compose is suitable for single-machine deployment. Kubernetes adds production-grade capabilities:
+\begin{itemize}[leftmargin=2cm]
+    \item \textbf{Self-healing} --- If a pod crashes, Kubernetes automatically restarts it
+    \item \textbf{Scaling} --- Add more replicas under load with one command
+    \item \textbf{Rolling updates} --- Deploy new versions without downtime
+    \item \textbf{Secret management} --- API keys stored as encrypted Kubernetes secrets
+\end{itemize}
+
+\subsection{Kubernetes Manifests}
+
+\begin{lstlisting}[caption=Kubernetes Deployment Manifest]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multimodal-rag
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: multimodal-rag
+  template:
+    metadata:
+      labels:
+        app: multimodal-rag
+    spec:
+      containers:
+      - name: multimodal-rag
+        image: multimodal-rag:latest
+        ports:
+        - containerPort: 8501
+        envFrom:
+        - secretRef:
+            name: multimodal-rag-secrets
+        volumeMounts:
+        - name: chroma-storage
+          mountPath: /app/chroma_store
+      volumes:
+      - name: chroma-storage
+        persistentVolumeClaim:
+          claimName: chroma-pvc
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Kubernetes Service Manifest]
+apiVersion: v1
+kind: Service
+metadata:
+  name: multimodal-rag-service
+spec:
+  selector:
+    app: multimodal-rag
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8501
+  type: LoadBalancer
+\end{lstlisting}
+
+\begin{table}[H]
+\centering
+\caption{Kubernetes Resources Created}
+\begin{tabular}{p{3cm}p{4cm}p{6cm}}
+\toprule
+\textbf{Resource} & \textbf{Name} & \textbf{Purpose} \\
+\midrule
+Deployment & multimodal-rag & Runs 2 replicas of the app pod \\
+Service & multimodal-rag-service & Exposes pods via LoadBalancer on port 80 \\
+Secret & multimodal-rag-secrets & Stores API keys as base64-encoded secrets \\
+PersistentVolumeClaim & chroma-pvc & Persists ChromaDB across pod restarts \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ── PLACEHOLDER: Kubernetes Screenshot ──
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{14cm}{\centering\vspace{3.5cm}
+    \textbf{[Screenshot: Kubernetes Pods Running]}\\[0.3cm]
+    \small Run \texttt{kubectl get pods} and \texttt{kubectl get services} and take a screenshot\\
+    showing the pods in Running state and the service with external IP.\\
+    Save as \texttt{images/kubernetes\_pods.png}
+    \vspace{3cm}}}
+    \caption{Kubernetes Pods and Services --- Running State}
+    \label{fig:kubernetes_pods}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Testing and Performance}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Testing Strategy}
+
+Two dedicated test scripts were written as part of the Agile testing approach, executed in Jenkins on every push.
+
+\subsection{Speed Diagnostic --- test\_speed.py}
+
+Measures the wall-clock time of each ingestion stage independently to identify bottlenecks.
+
+\begin{lstlisting}[caption=Speed Diagnostic Output --- After Dynamic Chunking Fix]
+=== Speed Diagnosis: data/documents/coi.pdf ===
+
+  Parsing document...             done in  3.92s  -> 398 chunks
+  Embedding 398 chunks...         done in  7.84s  -> 398 embedded
+  Saving to ChromaDB...           done in  1.12s  -> Saved
+
+=== Total: 12.88s for 430-page document ===
+\end{lstlisting}
+
+\subsection{Audio Verification --- verify\_audio.py}
+
+Queries ChromaDB directly to confirm audio chunks were ingested and shows a sample chunk with its timestamp.
+
+\begin{lstlisting}[caption=Audio Verification Output]
+=== ChromaDB Contents: 402 total chunks ===
+
+  [TEXT]  398 chunks  ->  coi.pdf (398 chunks)
+  [AUDIO]   4 chunks  ->  article_52.wav (4 chunks)
+
+=== Sample Audio Chunk ===
+File : article_52.wav
+Text : [00:00 - 00:30] Article 52 of the Indian Constitution
+       establishes the office of the President of India...
+\end{lstlisting}
+
+\section{Performance Benchmarks}
+
+\begin{table}[H]
+\centering
+\caption{Ingestion Performance Before and After Optimization}
+\begin{tabular}{p{3.5cm}p{2cm}p{2.5cm}p{2.5cm}p{2.5cm}}
+\toprule
+\textbf{File} & \textbf{Size} & \textbf{Chunks Before} & \textbf{Chunks After} & \textbf{Time After} \\
+\midrule
+coi.pdf (430 pages) & 8 MB & 1896 & 398 & 12.88s \\
+5-page DOCX & 50 KB & 18 & 18 & 1.2s \\
+JPG image & 200 KB & 1 & 1 & 4.8s \\
+3-min MP3 & 3 MB & 6 & 6 & 11.4s \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Retrieval Quality}
+
+\begin{table}[H]
+\centering
+\caption{Sample Query Results Showing Modality Diversity}
+\begin{tabular}{p{5cm}p{3.5cm}p{2cm}p{2cm}}
+\toprule
+\textbf{Query} & \textbf{Top Source} & \textbf{Modality} & \textbf{Score} \\
+\midrule
+What is Article 52? & coi.pdf & text & 0.91 \\
+How does the speaker explain Article 52? & article\_52.wav & audio & 0.83 \\
+What does the chart show? & revenue\_chart.png & image & 0.79 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Challenges and Solutions}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Challenge 1 --- API Key Exposed in Git History}
+\textbf{Problem:} The \texttt{.env} file was accidentally committed before \texttt{.gitignore} was created. GitHub's push protection blocked the push and flagged the exposed Anthropic and OpenAI keys.
+
+\textbf{Solution:} Wiped the entire git history using \texttt{Remove-Item -Recurse -Force .git}, reinitialised the repository, created \texttt{.gitignore} as the very first commit, and rotated all exposed API keys immediately.
+
+\textbf{Lesson:} \texttt{.gitignore} must be created before \texttt{git add} is ever run.
+
+\section{Challenge 2 --- Large PDF Over-Chunking}
+\textbf{Problem:} The 430-page Constitution of India PDF produced 1896 chunks at the default 500-character chunk size, causing 51-second ingestion time.
+
+\textbf{Solution:} Implemented adaptive chunk sizing that scales chunk size proportionally to document length, targeting a maximum of 400 chunks per document. Ingestion time dropped to 12.88 seconds with no degradation in retrieval quality.
+
+\section{Challenge 3 --- Audio Never Cited in Answers}
+\textbf{Problem:} With 398 PDF text chunks and only 4 audio chunks, cosine similarity always returned PDF chunks in the top-5 results, even for queries about the audio content.
+
+\textbf{Solution:} Implemented modality boosting --- fetching $6\times$ more candidates and guaranteeing at least one slot per non-text modality if its best chunk scores above 0.3. Audio and image chunks now consistently appear in results.
+
+\section{Challenge 4 --- Voyage AI Connection Drops}
+\textbf{Problem:} On slower networks, the Voyage AI API occasionally reset connections mid-request with \texttt{ConnectionResetError(10054)}, causing ingestion to fail.
+
+\textbf{Solution:} Added exponential backoff retry with up to 3 attempts and 2s/4s/6s delays. The issue has not recurred since.
+
+\section{Challenge 5 --- Git History Conflicts After Reset}
+\textbf{Problem:} After wiping \texttt{.git} to remove secrets, feature branches had divergent histories from main. GitHub showed ``entirely different commit histories'' and would not allow Pull Requests.
+
+\textbf{Solution:} Used \texttt{git merge --allow-unrelated-histories} to connect branch histories to main before creating Pull Requests.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter{Results and Conclusion}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\section{Deliverables Completed}
+
+\begin{table}[H]
+\centering
+\caption{Final Deliverables Status}
+\begin{tabular}{p{6cm}p{2.5cm}p{4.5cm}}
+\toprule
+\textbf{Deliverable} & \textbf{Status} & \textbf{Notes} \\
+\midrule
+PDF and DOCX ingestion & Complete & Dynamic chunking implemented \\
+Image processing (Claude Vision) & Complete & Supports 5 image formats \\
+Audio transcription (Whisper) & Complete & Timestamped 30-second chunks \\
+Semantic embedding (Voyage AI) & Complete & With retry logic \\
+ChromaDB vector storage & Complete & Persistent via Docker volume \\
+Modality-boosted retrieval & Complete & Audio and image always represented \\
+Claude answer generation & Complete & Grounded with source citations \\
+Streamlit UI & Complete & Live progress, source cards \\
+Docker containerization & Complete & One-command deployment \\
+Kubernetes deployment & Complete & 2 replicas, PVC for storage \\
+Jenkins CI/CD & Complete & Triggered on every push \\
+Jira Agile management & Complete & 2 sprints, 15 stories \\
+GitHub feature branches & Complete & 8 branches, 3 contributors \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Key Learnings}
+
+\begin{enumerate}[leftmargin=2cm]
+    \item \textbf{Unified schemas} across modalities dramatically simplify downstream pipeline design --- one embedding function handles text, image descriptions, and audio transcripts identically
+    \item \textbf{Modality imbalance} in vector databases must be explicitly handled --- a 400-chunk PDF will always dominate 4 audio chunks without boosting
+    \item \textbf{Git hygiene} is critical in API-key-driven projects --- \texttt{.gitignore} before the first commit is non-negotiable
+    \item \textbf{Agile retrospectives} surfaced the modality boosting problem as a backlog item --- it would have been missed in a waterfall process
+    \item \textbf{Docker volumes} are essential for stateful services --- without them every container rebuild wipes the vector database
+\end{enumerate}
+
+\section{Future Enhancements}
+
+\begin{table}[H]
+\centering
+\caption{Planned Future Enhancements}
+\begin{tabular}{p{3.5cm}p{9cm}}
+\toprule
+\textbf{Enhancement} & \textbf{Description} \\
+\midrule
+Video Support & Extract frames and audio track, process both pipelines \\
+Streaming Answers & Stream Claude tokens in real time for faster perceived response \\
+Re-ranking & Cross-encoder re-ranking after initial retrieval for precision \\
+Multi-tenant & Separate ChromaDB collections per user or project \\
+Kubernetes HPA & Horizontal pod autoscaling based on query throughput \\
+Fine-tuned embeddings & Domain-specific Voyage AI fine-tuning for legal/medical text \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+
+This project demonstrates the successful convergence of modern generative AI capabilities with a complete, professional DevOps lifecycle. The Multimodal RAG System solves a genuine knowledge retrieval problem --- searching across PDFs, images, and audio --- using a clean, modular, six-layer architecture.
+
+The Agile methodology enabled mid-project adaptations that were critical to the final quality of the system. The modality boosting algorithm, exponential backoff retry, and dynamic chunking were all sprint-level adaptations driven by real testing feedback --- not planned from day one. This is the practical value of Agile in AI system development.
+
+From a DevOps perspective, the project showcases a full, unbroken pipeline: collaborative development on GitHub with feature branches, automated CI/CD with Jenkins, portable packaging with Docker, scalable orchestration with Kubernetes, and structured sprint management with Jira. Every tool served a specific, justified purpose in the lifecycle.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\chapter*{References}
+\addcontentsline{toc}{chapter}{References}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{enumerate}[leftmargin=2cm]
+    \item Anthropic. (2024). \textit{Claude API Documentation}. \url{https://docs.anthropic.com}
+    \item Voyage AI. (2024). \textit{Voyage Embeddings Documentation}. \url{https://docs.voyageai.com}
+    \item OpenAI. (2024). \textit{Whisper API Documentation}. \url{https://platform.openai.com/docs/guides/speech-to-text}
+    \item ChromaDB. (2024). \textit{ChromaDB Documentation}. \url{https://docs.trychroma.com}
+    \item Streamlit. (2024). \textit{Streamlit Documentation}. \url{https://docs.streamlit.io}
+    \item Docker Inc. (2024). \textit{Docker Documentation}. \url{https://docs.docker.com}
+    \item Kubernetes. (2024). \textit{Kubernetes Documentation}. \url{https://kubernetes.io/docs}
+    \item Jenkins. (2024). \textit{Jenkins User Documentation}. \url{https://www.jenkins.io/doc}
+    \item Atlassian. (2024). \textit{Jira Software Documentation}. \url{https://support.atlassian.com/jira-software-cloud}
+    \item Beck, K. et al. (2001). \textit{Manifesto for Agile Software Development}. \url{https://agilemanifesto.org}
+    \item Lewis, P. et al. (2020). \textit{Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks}. arXiv:2005.11401
+    \item Schwaber, K., \& Sutherland, J. (2020). \textit{The Scrum Guide}. \url{https://scrumguides.org}
+\end{enumerate}
+
+\end{document}
